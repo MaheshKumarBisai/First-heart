@@ -110,7 +110,11 @@ export default function ProfileScreen() {
             const formData = new FormData();
             const filename = uri.split('/').pop() || 'photo.jpg';
             const match = /\.(\w+)$/.exec(filename);
-            const type = match ? `image/${match[1]}` : `image/jpeg`;
+            let type = 'image/jpeg';
+            if (match) {
+                const ext = match[1].toLowerCase();
+                type = ext === 'jpg' ? 'image/jpeg' : `image/${ext}`;
+            }
 
             // @ts-ignore
             formData.append('file', { uri, name: filename, type });
